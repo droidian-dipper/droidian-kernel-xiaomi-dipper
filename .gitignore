@@ -38,7 +38,7 @@ Module.symvers
 *.dwo
 *.su
 *.c.[012]*.*
-
+out/
 #
 # Top-level generic files
 #
@@ -55,9 +55,11 @@ Module.symvers
 #
 # Debian directory (make deb-pkg)
 #
-/debian/
-
-#
+debian/linux*
+debian/path-override
+debian/debhelper-build-stamp
+debian/files
+debian/changelog
 # tar directory (make tar*-pkg)
 #
 /tar-install/
