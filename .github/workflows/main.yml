@@ -24,8 +24,8 @@ jobs:
     steps:
       - name: Get ready for docker
         run: |
-          env GITHUB_WORKSPACE="/home/runner/droidian/kernel/xiaomi/dipper/"
-          env PACKAGES_DIR="/home/runner/droidian/packages/"
+          export GITHUB_WORKSPACE="/home/runner/droidian/kernel/xiaomi/dipper/"
+          export PACKAGES_DIR="/home/runner/droidian/packages/"
           mkdir -p $GITHUB_WORKSPACE
           mkdir -p $PACKAGES_DIR
           cd $GITHUB_WORKSPACE
