@@ -24,8 +24,8 @@ jobs:
     steps:
       - name: Get ready for docker
         run: |
-          GITHUB_WORKSPACE="/home/runner/droidian/kernel/xiaomi/dipper/"
-          PACKAGES_DIR="/home/runner/droidian/packages/"
+          env GITHUB_WORKSPACE="/home/runner/droidian/kernel/xiaomi/dipper/"
+          env PACKAGES_DIR="/home/runner/droidian/packages/"
           mkdir -p $GITHUB_WORKSPACE
           mkdir -p $PACKAGES_DIR
           cd $GITHUB_WORKSPACE
@@ -34,9 +34,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Run Docker container
-        run: docker run -v $PACKAGES_DIR:/buildd -v $KERNEL_DIR:/buildd/sources -it quay.io/droidian/build-essential:bullseye-amd64 bash
-
-      # Runs a set of commands using the runners shell
-      - name: Start compilation
-        run: RELENG_HOST_ARCH="arm64" releng_build_packages
+      - name: Docker Run Action
+        uses: addnab/docker-run-action@v3
+        with: -v $PACKAGES_DIR:/buildd -v $KERNEL_DIR:/buildd/sources -it quay.io/droidian/build-essential:bullseye-amd64 bash
+        run: |
+          RELENG_HOST_ARCH="arm64" releng-build-packages
+          exit
+        
+      - name: Push artifacts
+        uses: actions/upload-artifact@v2
+        with: 
+          name: linux-package
+          path: $PACKAGES_DIR
