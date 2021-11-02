@@ -37,9 +37,9 @@ jobs:
       - name: Docker Run Action
         uses: addnab/docker-run-action@v3
         with: -v $PACKAGES_DIR:/buildd -v $KERNEL_DIR:/buildd/sources -it quay.io/droidian/build-essential:bullseye-amd64 bash
-        run: |
-          RELENG_HOST_ARCH="arm64" releng-build-packages
-          exit
+          run: |
+            RELENG_HOST_ARCH="arm64" releng-build-packages
+            exit
         
       - name: Push artifacts
         uses: actions/upload-artifact@v2
